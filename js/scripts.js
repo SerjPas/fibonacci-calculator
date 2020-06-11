@@ -13,6 +13,15 @@ function calculateFibonacci(xVariable) {
     return prev;
 
 }
+function calculateFibonacciRecurcion(xVariable) {
+
+    if(n <= 1){
+        return xVariable;
+    }else{
+        return calculateFibonacciRecurcion(xVariable - 1) + calculateFibonacciRecurcion(xVariable - 2);
+    }
+
+}
 
 
 
