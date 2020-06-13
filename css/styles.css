@@ -1,4 +1,19 @@
+
+body{
+    font-family: 'Open Sans', sans-serif;
+}
+
 #Y:hover{
     border-bottom: 3px solid blue;
 
+}
+.error50{
+    color: #A94442;
+    width: 180px;
+    height: 33px;
+    border: 1px solid #EBCCCC;
+    border-radius: 4px;
+}
+.margin-left-4rem{
+    margin-left: 4rem;
 }
