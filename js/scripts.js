@@ -8,6 +8,7 @@ function callServer() {
     y.classList.add('d-none');
     const errorMoreThan50 = document.querySelector('.error50');
     const input = document.querySelector('#number-input');
+    const error42 = document.querySelector('#error42')
 
     if (xVariable > 50) {
         errorMoreThan50.classList.remove("d-none");
@@ -16,6 +17,9 @@ function callServer() {
     } else {
         fetch(SERVER_URL)
             .then(function (response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
                 return response.json();
             })
             .then(function (data) {
@@ -24,10 +28,14 @@ function callServer() {
                 yVariable.innerText = data.result;
                 spinner.classList.add('d-none');
                 y.classList.remove('d-none');
+            })
+            .catch(function (error) {
+                error42.innerText = error;
+                spinner.classList.add('d-none');
+
             });
     }
 }
-
 
 
 
