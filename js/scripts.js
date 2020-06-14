@@ -49,5 +49,19 @@ function callServer() {
     }
 }
 
+function callResultsOnPageLoad() {
+    const SERVER_URL = `http://localhost:5050/getFibonacciResults`;
+    fetch(SERVER_URL)
+        .then(function (response) {
+            if (!response.ok) {
+                throw Error(response.statusText);
+            }
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+
+        });
+}
 
 

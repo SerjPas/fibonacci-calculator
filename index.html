@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body>
+<body onload="callResultsOnPageLoad()">
 <div class="container">
     <div class="row">
         <div class="col">
@@ -43,7 +43,22 @@ height: 38px;">
         larger than 50</p></div>
 
 </div>
+<div class="container" style="margin-top: 87px">
+    <div class="row">
+        <div class="col d-flex">
+        <h2 class="h2-mod">Results</h2>
+        <div style="padding-left: 14px" class="d-flex align-items-center">
+            <div id="second-spinner" class="spinner-border d-none " role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+        </div>
+    </div>
+    <p class="p-mod-2"></p>
+    <p class="p-mod-2"></p>
+    <p class="p-mod-2"></p>
 
+</div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
