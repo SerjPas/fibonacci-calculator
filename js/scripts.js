@@ -16,13 +16,13 @@ function callServer() {
         input.classList.add('error50-input');
 
     } else {
-        if(input.classList.contains('error50-input')){
+        if (input.classList.contains('error50-input')) {
             input.classList.remove('error50-input')
         }
-        if(!errorMoreThan50.classList.contains("d-none")){
+        if (!errorMoreThan50.classList.contains("d-none")) {
             errorMoreThan50.classList.add("d-none")
         }
-        if(error42.classList.contains('is-present')){
+        if (error42.classList.contains('is-present')) {
             error42.classList.add('d-none');
         }
 
@@ -35,7 +35,6 @@ function callServer() {
             })
             .then(function (data) {
                 console.log(data);
-
                 const yVariable = document.querySelector(".Y");
                 yVariable.innerText = data.result;
                 spinner.classList.add('d-none');
@@ -60,6 +59,15 @@ function callResultsOnPageLoad() {
         })
         .then(function (data) {
             console.log(data);
+            for (let i = 0; i <= data.results.length ; i++) {
+                let date = new Date(data.results[i].createdDate); // Converting milliseconds to a date
+                let node = document.createElement("li");                 // Create a <li> node
+                let textnode = document.createTextNode(`The Fibonacci Of ${data.results[i].number} is 
+                ${data.results[i].result}. Calculated at: ${date.toString()}`);         // Create a text node
+                node.appendChild(textnode);                              // Append the text to <li>
+                document.getElementById("list-of-results").appendChild(node);     // Append <li> to <ul> with id="list-of-results"
+                console.log(data.results[i]);
+            }
 
         });
 }
