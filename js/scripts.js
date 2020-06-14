@@ -8,8 +8,8 @@ function callServer() {
     y.classList.add('d-none');
 
     let errorMoreThan50 = document.querySelector('.error50');
+    let error42 = document.querySelector('#error42');
     let input = document.querySelector('#number-input');
-    let error42 = document.querySelector('#error42')
 
     if (xVariable > 50) {
         errorMoreThan50.classList.remove("d-none");
@@ -28,10 +28,11 @@ function callServer() {
 
         fetch(SERVER_URL)
             .then(function (response) {
-                // console.log(response)
                 if (!response.ok) {
                     response.text().then(function (text) {
-                        error42.innerText = `Server error: ${text} `;
+                        error42.innerText = `Server error: ${text}`;
+                        error42.setAttribute("class", "is-present")
+                        loader.classList.add('d-none');
                     });
 
                 }
@@ -44,12 +45,7 @@ function callServer() {
                 loader.classList.add('d-none');
                 y.classList.remove('d-none');
             })
-            .catch(function () {
 
-
-                error42.setAttribute("class", "is-present")
-                loader.classList.add('d-none');
-            });
     }
 }
 
@@ -74,7 +70,7 @@ function callResultsOnPageLoad() {
                 node.appendChild(textnode);                              // Append the text to <li>
                 document.getElementById("list-of-results").appendChild(node);     // Append <li> to <ul> with id="list-of-results"
                 // console.log(data.results[i]);
-                secondSpinner.classList.add('d-none');
+                secondLoader.classList.add('d-none');
             }
 
         });
@@ -82,10 +78,10 @@ function callResultsOnPageLoad() {
 
 let button = document.getElementById('calcFiboButton');
 let listOfResults = document.getElementById('list-of-results');
-let secondSpinner = document.querySelector('#second-spinner');
+let secondLoader = document.querySelector('#second-loader');
 button.addEventListener('click', callServer);
 button.addEventListener('click', ()=>{
-    secondSpinner.classList.remove('d-none');
+    secondLoader.classList.remove('d-none');
     listOfResults.innerHTML = "";
     callResultsOnPageLoad();
 
