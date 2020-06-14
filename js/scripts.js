@@ -59,8 +59,8 @@ function callResultsOnPageLoad() {
         })
         .then(function (data) {
             console.log(data);
-            for (let i = 0; i < data.results.length ; i++) {
-                data.results.sort((a, b) => a.createdDate - b.createdDate); //sorting array
+            for (let i = 0; i < data.results.length; i++) {
+                data.results.sort((a, b) => b.createdDate - a.createdDate); //sorting array
                 let date = new Date(data.results[i].createdDate); // Converting milliseconds to a date
 
                 let node = document.createElement("li");                 // Create a <li> node
@@ -69,9 +69,20 @@ function callResultsOnPageLoad() {
                 node.appendChild(textnode);                              // Append the text to <li>
                 document.getElementById("list-of-results").appendChild(node);     // Append <li> to <ul> with id="list-of-results"
                 console.log(data.results[i]);
+                secondSpinner.classList.add('d-none');
             }
 
         });
 }
 
+let button = document.getElementById('calcFiboButton');
+let listOfResults = document.getElementById('list-of-results');
+let secondSpinner = document.querySelector('#second-spinner');
+button.addEventListener('click', callServer);
+button.addEventListener('click', ()=>{
+    secondSpinner.classList.remove('d-none');
+    listOfResults.innerHTML = "";
+    callResultsOnPageLoad();
+
+} );
 

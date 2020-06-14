@@ -39,6 +39,14 @@ body {
     border-bottom: 3px solid blue;
 
 }
+#list-of-results li{
+    border-bottom: 1px solid #000000;
+    list-style: none;
+}
+#list-of-results li:hover{
+    border-bottom: 2px solid #86CDFD;
+    list-style: none;
+}
 
 .error50 {
     color: #A94442;
