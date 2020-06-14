@@ -59,8 +59,10 @@ function callResultsOnPageLoad() {
         })
         .then(function (data) {
             console.log(data);
-            for (let i = 0; i <= data.results.length ; i++) {
+            for (let i = 0; i < data.results.length ; i++) {
+                data.results.sort((a, b) => a.createdDate - b.createdDate); //sorting array
                 let date = new Date(data.results[i].createdDate); // Converting milliseconds to a date
+
                 let node = document.createElement("li");                 // Create a <li> node
                 let textnode = document.createTextNode(`The Fibonacci Of ${data.results[i].number} is 
                 ${data.results[i].result}. Calculated at: ${date.toString()}`);         // Create a text node
