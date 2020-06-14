@@ -3,8 +3,8 @@ function callServer() {
     let y = document.querySelector('.Y');
 
     const SERVER_URL = `http://localhost:5050/fibonacci/${xVariable}`;
-    let spinner = document.getElementById('spinner');
-    spinner.classList.remove('d-none');
+    let loader = document.getElementById('loader');
+    loader.classList.remove('d-none');
     y.classList.add('d-none');
 
     let errorMoreThan50 = document.querySelector('.error50');
@@ -28,8 +28,12 @@ function callServer() {
 
         fetch(SERVER_URL)
             .then(function (response) {
+                // console.log(response)
                 if (!response.ok) {
-                    throw Error(response.statusText);
+                    response.text().then(function (text) {
+                        error42.innerText = `Server error: ${text} `;
+                    });
+
                 }
                 return response.json();
             })
@@ -37,13 +41,14 @@ function callServer() {
                 console.log(data);
                 const yVariable = document.querySelector(".Y");
                 yVariable.innerText = data.result;
-                spinner.classList.add('d-none');
+                loader.classList.add('d-none');
                 y.classList.remove('d-none');
             })
-            .catch(function (error) {
-                error42.innerText = error;
+            .catch(function () {
+
+
                 error42.setAttribute("class", "is-present")
-                spinner.classList.add('d-none');
+                loader.classList.add('d-none');
             });
     }
 }
@@ -68,7 +73,7 @@ function callResultsOnPageLoad() {
                 ${data.results[i].result}. Calculated at: ${date.toString()}`);         // Create a text node
                 node.appendChild(textnode);                              // Append the text to <li>
                 document.getElementById("list-of-results").appendChild(node);     // Append <li> to <ul> with id="list-of-results"
-                console.log(data.results[i]);
+                // console.log(data.results[i]);
                 secondSpinner.classList.add('d-none');
             }
 
