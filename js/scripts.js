@@ -72,18 +72,48 @@ function callResultsOnPageLoad() {
                 // console.log(data.results[i]);
                 secondLoader.classList.add('d-none');
             }
-
         });
 }
 
-let button = document.getElementById('calcFiboButton');
+
 let listOfResults = document.getElementById('list-of-results');
 let secondLoader = document.querySelector('#second-loader');
-button.addEventListener('click', callServer);
-button.addEventListener('click', ()=>{
+
+function playWithLoaderAndCallResultsOnPageLoad() {
     secondLoader.classList.remove('d-none');
     listOfResults.innerHTML = "";
     callResultsOnPageLoad();
+}
 
-} );
+function calcFibonacciOnServer() {
+    callServer();
+    playWithLoaderAndCallResultsOnPageLoad();
+}
 
+function calcFibonacciLocal() {
+    let xVariable = document.getElementById('number-input').value;
+    document.querySelector(".Y").innerText = calculateFibonacci(xVariable);
+
+    function calculateFibonacci(xVariable) {
+        let prev = 0, next = 1;
+        for (let i = 0; i < xVariable; i++) {
+            let temp = next;
+            next = prev + next;
+            prev = temp;
+        }
+        return prev;
+    }
+}
+
+function isChecked() {
+    let check = document.getElementById('check');
+    if (check.checked) {
+        calcFibonacciOnServer();
+    } else {
+        calcFibonacciLocal();
+    }
+
+}
+
+let button = document.getElementById('calcFiboButton');
+button.addEventListener("click", isChecked);
