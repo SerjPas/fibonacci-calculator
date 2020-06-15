@@ -29,12 +29,12 @@ function callServer() {
         fetch(SERVER_URL)
             .then(function (response) {
                 if (!response.ok) {
-                    response.text().then(function (text) {
+                    response.text()
+                        .then(function (text) {
                         error42.innerText = `Server error: ${text}`;
                         error42.setAttribute("class", "is-present")
                         loader.classList.add('d-none');
                     });
-
                 }
                 return response.json();
             })

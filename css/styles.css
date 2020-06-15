@@ -26,7 +26,13 @@
     font-size: 24px;
     line-height: 24px;
 }
-
+.p-mod-3{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 21px;
+    color: #373A3C;
+}
 body {
     font-family: 'Open Sans', sans-serif;
 }
@@ -76,4 +82,13 @@ body {
     font-size: 16px;
     line-height: 24px;
     color: #D9534F;
+}
+.btn-style{
+    width: 122px;
+    height: 38px;
+    color: #373A3C;
+    background: #E6E6E6;
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+
 }
