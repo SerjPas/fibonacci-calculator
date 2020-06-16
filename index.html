@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body onload="callResultsOnPageLoad()">
+<body  onload="callResultsOnPageLoad()">
 <div class="container">
     <div class="row">
         <div class="col">
@@ -22,6 +22,8 @@
     </div>
 
     <div class="row align-items-center" style="margin-top: 50px">
+
+        <form id="calcFiboButton"  class="d-flex">
         <label for="number-input" style="padding-left: 15px" class="form-label p-mod-2">The Fibonacci Of</label>
         <div style="padding-left: 14px">
             <input class="form-control" type="number" value="" id="number-input" style="width: 86px;
@@ -29,7 +31,7 @@ height: 38px;">
         </div>
 
         <div style="padding-left: 14px">
-            <button id="calcFiboButton" type="submit" class="btn btn-primary">Is</button>
+            <button  type="submit" class="btn btn-primary">Is</button>
         </div>
         <div style="padding-left: 14px" class="d-flex">
             <div id="loader" class="spinner-border d-none" role="status">
@@ -37,6 +39,8 @@ height: 38px;">
             </div>
             <div class="d-flex"><p class="p-mod"><span id="Y" class="Y ml-3"></span><span id="error42"></span></p></div>
         </div>
+        </form>
+
     </div>
 
     <div class="row "><p class="error50 d-none text-center margin-left" style="background-color: #F2DEDE;">Can't be
@@ -56,38 +60,32 @@ height: 38px;">
 <div class="container" style="margin-top: 87px">
     <div class="row">
         <div class="col d-flex">
-        <h2 class="h2-mod">Results</h2>
-        <div style="padding-left: 14px" class="d-flex align-items-center">
-            <div id="second-loader" class="spinner-border d-none" role="status">
-                <span class="sr-only"></span>
+            <h2 class="h2-mod">Results</h2>
+            <div style="padding-left: 14px" class="d-flex align-items-center">
+                <div id="second-loader" class="spinner-border d-none" role="status">
+                    <span class="sr-only"></span>
+                </div>
             </div>
-        </div>
         </div>
     </div>
     <div class="row" style="margin-top: 18px; margin-bottom: 40px;">
         <div class="col">
-            <div class="dropdown">
-                <button class="btn btn-style" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Sort By
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" id="number-asc" href="#">Number Asc</a>
-                    <a class="dropdown-item" id="number-desc" href="#">Number Desc</a>
-                    <a class="dropdown-item" id="date-asc" href="#">Date Asc</a>
-                    <a class="dropdown-item" id="date-desc" href="#">Date Desc</a>
-                </div>
-            </div>
-
+            <select class="form-control option-style" id="FormControlSelect">
+                <option value="" selected>Sort By</option>
+                <option value="Number Asc">Number Asc</option>
+                <option value="Number Desc">Number Desc</option>
+                <option value="Date Asc">Date Asc</option>
+                <option value="Date Desc">Date Desc</option>
+            </select>
         </div>
 
     </div>
-    <div class="row">
-       <div class="col">
-           <ul id="list-of-results" class="pl-0">
-           </ul>
-       </div>
-
-   </div>
+    <div class="row ">
+        <div class="col">
+            <ul id="list-of-results" class="pl-0">
+            </ul>
+        </div>
+    </div>
 
 </div>
 

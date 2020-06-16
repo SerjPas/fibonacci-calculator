@@ -105,7 +105,8 @@ function calcFibonacciLocal() {
     }
 }
 
-function isChecked() {
+function fibonacci(event) {
+    event.preventDefault();
     let check = document.getElementById('check');
     if (check.checked) {
         calcFibonacciOnServer();
@@ -116,4 +117,4 @@ function isChecked() {
 }
 
 let button = document.getElementById('calcFiboButton');
-button.addEventListener("click", isChecked);
+button.addEventListener("submit", fibonacci);

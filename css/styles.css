@@ -1,13 +1,15 @@
 * {
     /*border: 1px solid red;*/
 }
-.h1-mod{
+
+.h1-mod {
     font-style: normal;
     font-weight: normal;
     font-size: 72px;
     line-height: 79px;
 }
-.h2-mod{
+
+.h2-mod {
     font-style: normal;
     font-weight: normal;
     font-size: 54px;
@@ -20,19 +22,22 @@
     font-size: 24px;
     line-height: 24px;
 }
+
 .p-mod-2 {
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
     line-height: 24px;
 }
-.p-mod-3{
+
+.p-mod-3 {
     font-style: normal;
     font-weight: normal;
     font-size: 16px;
     line-height: 21px;
     color: #373A3C;
 }
+
 body {
     font-family: 'Open Sans', sans-serif;
 }
@@ -45,11 +50,13 @@ body {
     border-bottom: 3px solid blue;
 
 }
-#list-of-results li{
+
+#list-of-results li {
     border-bottom: 1px solid #000000;
     list-style: none;
 }
-#list-of-results li:hover{
+
+#list-of-results li:hover {
     border-bottom: 2px solid #86CDFD;
     list-style: none;
 }
@@ -61,6 +68,7 @@ body {
     border: 1px solid #EBCCCC;
     border-radius: 4px;
 }
+
 .error50-input {
     color: #A94442;
     width: 180px;
@@ -68,6 +76,7 @@ body {
     border: 1px solid #EBCCCC;
     border-radius: 4px;
 }
+
 .margin-left {
     margin-top: 8px;
     margin-left: 6.5rem;
@@ -83,8 +92,9 @@ body {
     line-height: 24px;
     color: #D9534F;
 }
-.btn-style{
-    width: 122px;
+
+.option-style {
+    width: 149px;
     height: 38px;
     color: #373A3C;
     background: #E6E6E6;
@@ -92,3 +102,4 @@ body {
     border-radius: 4px;
 
 }
+
