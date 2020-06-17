@@ -25,9 +25,6 @@ async function callServer(validInput) {
 }
 
 
-function sortingArray(data) {
-    data.results.sort((a, b) => b.createdDate - a.createdDate); //sorting array
-}
 
 function callResultsOnPageLoad() {
     const SERVER_URL = `http://localhost:5050/getFibonacciResults`;
@@ -36,16 +33,19 @@ function callResultsOnPageLoad() {
             return validateResponse(response);
         })
         .then(function (data) {
-            console.log (data);
             sortingArray(data);
             let ulHtml = '';
-            for (let newArr of data.results)  {
+            for (let newArr of data.results) {
                 let date = new Date(newArr.createdDate).toString(); // Converting milliseconds to a date
                 ulHtml += `<li> The Fibonacci Of ${newArr.number} is
                         ${newArr.result}. Calculated at: ${date}.</li>`;
             }
             document.getElementById("list-of-results").innerHTML = ulHtml;
         });
+}
+
+function sortingArray(data) {
+    data.results.sort((a, b) => b.createdDate - a.createdDate); //sorting array
 }
 
 function hideResult() {
@@ -128,8 +128,8 @@ async function fibonacci(event) {
     event.preventDefault();
     let check = document.getElementById('check');
     if (check.checked) {
-        await refreshResults();
         output.innerText = await callServer(validInput);
+        await refreshResults();
 
     } else {
         output.innerText = calcFibonacciLocal(validInput);
