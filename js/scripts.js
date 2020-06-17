@@ -5,6 +5,49 @@ let error42 = document.querySelector('#error42');
 let listOfResults = document.getElementById('list-of-results');
 
 
+async function callServer(validInput) {
+    const SERVER_URL = `http://localhost:5050/fibonacci/${validInput}`;
+    loaderShow(loaders);
+    hideResult();
+    if (error42.classList.contains('is-present')) {
+        error42.classList.add('d-none');
+    }
+    return await fetch(SERVER_URL)
+        .then(function (response) {
+            return validateResponse(response);
+        })
+        .then(function (data) {
+            console.log(data);
+            showResult();
+            loaderHide(loaders);
+            return data.result
+        });
+}
+
+
+function sortingArray(data) {
+    data.results.sort((a, b) => b.createdDate - a.createdDate); //sorting array
+}
+
+function callResultsOnPageLoad() {
+    const SERVER_URL = `http://localhost:5050/getFibonacciResults`;
+    fetch(SERVER_URL)
+        .then(function (response) {
+            return validateResponse(response);
+        })
+        .then(function (data) {
+            console.log (data);
+            sortingArray(data);
+            let ulHtml = '';
+            for (let newArr of data.results)  {
+                let date = new Date(newArr.createdDate).toString(); // Converting milliseconds to a date
+                ulHtml += `<li> The Fibonacci Of ${newArr.number} is
+                        ${newArr.result}. Calculated at: ${date}.</li>`;
+            }
+            document.getElementById("list-of-results").innerHTML = ulHtml;
+        });
+}
+
 function hideResult() {
     output.classList.add('d-none');
 }
@@ -13,46 +56,6 @@ function showResult() {
     output.classList.remove('d-none');
 }
 
-function callServer(validInput) {
-    const SERVER_URL = `http://localhost:5050/fibonacci/${validInput}`;
-    loaderShow(loaders);
-    // hideResult();
-    // if (error42.classList.contains('is-present')) {
-    //     error42.classList.add('d-none');
-    // }
-    fetch(SERVER_URL)
-        .then(function (response) {
-            return validateResponse(response);
-        })
-        .then(function (data) {
-            console.log(data);
-            output.innerText =  data.result;
-            // showResult();
-            loaderHide(loaders);
-        })
-}
-//
-// function callResultsOnPageLoad() {
-//     const SERVER_URL = `http://localhost:5050/getFibonacciResults`;
-//     fetch(SERVER_URL)
-//         .then(function (response) {
-//             return validateResponse(response);
-//         })
-//         .then(function (data) {
-//             console.log(data);
-//             for (let i = 0; i < data.results.length; i++) {
-//                     let date = new Date(data.results[i].createdDate); // Converting milliseconds to a date
-//                     let node = document.createElement("li");                 // Create a <li> node
-//                     let textnode = document.createTextNode(`The Fibonacci Of ${data.results[i].number} is
-//                 ${data.results[i].result}. Calculated at: ${date.toString()}`);         // Create a text node
-//                     node.appendChild(textnode);                              // Append the text to <li>
-//                     document.getElementById("list-of-results").appendChild(node);     // Append <li> to <ul> with id="list-of-results"
-//                     loaderHide(loaders);
-//                 }
-//             }
-//         )
-// }
-//
 function loaderShow(loaders) {
     for (const loader of loaders) {
         loader.classList.remove('d-none');
@@ -73,17 +76,18 @@ function validateResponse(response) {
                 error42.innerText = `Server error: ${text}`;
                 error42.setAttribute("class", "is-present");
                 output.classList.add('d-none');
-                // loaderHide(loaders);
+                loaderHide(loaders);
             });
     }
     return response.json();
 }
-//
-// function refreshResults() {
-//     listOfResults.innerHTML = "";
-//     callResultsOnPageLoad();
-//
-// }
+
+
+function refreshResults() {
+    listOfResults.innerHTML = "";
+    callResultsOnPageLoad();
+
+}
 
 function calcFibonacciLocal(validInput) {
     let prev = 0, next = 1;
@@ -104,9 +108,12 @@ function checkThatError50presented() {
 function validateInput(input) {
     checkThatError50presented();
     if (input <= 50) {
+        showResult();
         return input;
     } else {
+        hideResult();
         errorMoreThan50.classList.remove('d-none');
+        loaderHide(loaders);
     }
 
 }
@@ -115,14 +122,15 @@ function getInput() {
     return document.querySelector('#number-input').value;
 }
 
-function fibonacci(event) {
+async function fibonacci(event) {
     let myInput = getInput();
     let validInput = validateInput(myInput)
     event.preventDefault();
     let check = document.getElementById('check');
     if (check.checked) {
-        // refreshResults();
-        callServer(validInput);
+        await refreshResults();
+        output.innerText = await callServer(validInput);
+
     } else {
         output.innerText = calcFibonacciLocal(validInput);
     }
@@ -131,4 +139,4 @@ function fibonacci(event) {
 
 let form = document.getElementById('calcFiboButton');
 form.addEventListener("submit", fibonacci);
-// document.addEventListener('DOMContentLoaded', callResultsOnPageLoad);
+document.addEventListener('DOMContentLoaded', callResultsOnPageLoad);
