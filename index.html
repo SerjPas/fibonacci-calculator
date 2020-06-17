@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="./css/styles.css">
 </head>
 
-<body  onload="callResultsOnPageLoad()">
+<body>
 <div class="container">
     <div class="row">
         <div class="col">
@@ -22,29 +22,31 @@
     </div>
 
     <div class="row align-items-center" style="margin-top: 50px">
-
-        <form id="calcFiboButton"  class="d-flex">
+        <form id="calcFiboButton"  class="d-flex flex-shrink-0">
         <label for="number-input" style="padding-left: 15px" class="form-label p-mod-2">The Fibonacci Of</label>
         <div style="padding-left: 14px">
             <input class="form-control" type="number" value="" id="number-input" style="width: 86px;
 height: 38px;">
         </div>
-
         <div style="padding-left: 14px">
             <button  type="submit" class="btn btn-primary">Is</button>
         </div>
         <div style="padding-left: 14px" class="d-flex">
-            <div id="loader" class="spinner-border d-none" role="status">
+            <div class="spinner-border d-none loader" role="status">
                 <span class="sr-only"></span>
             </div>
-            <div class="d-flex"><p class="p-mod"><span id="Y" class="Y ml-3"></span><span id="error42"></span></p></div>
+            <div class="d-flex">
+                <span id="place-for-result" class="ml-3"></span>
+                <span id="error42"></span>
+            </div>
         </div>
         </form>
-
     </div>
 
-    <div class="row "><p class="error50 d-none text-center margin-left" style="background-color: #F2DEDE;">Can't be
-        larger than 50</p></div>
+    <div class="row ">
+        <p class="error50 d-none text-center margin-left-and-top" style="background-color: #F2DEDE;">Can't be
+        larger than 50</p>
+    </div>
 
     <div class="row">
         <div class="col">
@@ -53,16 +55,14 @@ height: 38px;">
                 <label class="form-check-label" for="check">Save Calculation</label>
             </div>
         </div>
-
     </div>
-
 </div>
 <div class="container" style="margin-top: 87px">
     <div class="row">
         <div class="col d-flex">
             <h2 class="h2-mod">Results</h2>
             <div style="padding-left: 14px" class="d-flex align-items-center">
-                <div id="second-loader" class="spinner-border d-none" role="status">
+                <div class="spinner-border d-none loader" role="status">
                     <span class="sr-only"></span>
                 </div>
             </div>
@@ -78,7 +78,6 @@ height: 38px;">
                 <option value="Date Desc">Date Desc</option>
             </select>
         </div>
-
     </div>
     <div class="row ">
         <div class="col">
@@ -86,7 +85,6 @@ height: 38px;">
             </ul>
         </div>
     </div>
-
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
