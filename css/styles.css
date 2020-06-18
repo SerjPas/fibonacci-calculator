@@ -50,13 +50,17 @@ body {
 }
 
 #list-of-results li {
+    padding: 18px 0;
     border-bottom: 1px solid #000000;
     list-style: none;
+    font-size: 23px;
+    line-height: 23px;
 }
 
 #list-of-results li:hover {
     border-bottom: 2px solid #86CDFD;
     list-style: none;
+
 }
 
 .error50 {
@@ -76,8 +80,8 @@ body {
 }
 
 .margin-left-and-top {
-    margin-top: 8px;
     margin-left: 6.5rem;
+    margin-top: 8px;
 }
 
 #error42 {
