@@ -1,6 +1,7 @@
 * {
-    /*border: 1px solid red;*/
+    box-sizing: border-box;
 }
+
 body {
     font-family: 'Open Sans', sans-serif;
 }
@@ -39,6 +40,22 @@ body {
     font-size: 16px;
     line-height: 21px;
     color: #373A3C;
+}
+
+.margin-top-100px {
+    margin-top: 100px;
+}
+
+.margin-top-50px {
+    margin-top: 50px;
+}
+
+.padding-left-14px {
+    padding-left: 14px;
+}
+.margin-top-and-bottom{
+    margin-top: 18px;
+    margin-bottom: 40px;
 }
 
 #place-for-result {

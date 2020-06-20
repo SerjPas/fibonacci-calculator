@@ -10,17 +10,16 @@
 
     async function callServer(validInput) {
         const SERVER_URL = `http://localhost:5050/fibonacci/${validInput}`;
-        loaderShow(loaders);
-        hideResult();
+        showElements(loaders);
+        hideElement(output);
         checkThatErrorPresented();
         return await fetch(SERVER_URL)
             .then(function (response) {
                 return validateResponse(response);
             })
             .then(function (data) {
-                console.log(data);
-                showResult();
-                loaderHide(loaders);
+                showElement(output);
+                hideElements(loaders);
                 return data.result
             });
     }
@@ -33,8 +32,8 @@
         let ulHtml = '';
         for (let newArr of array) {
             let date = convertDate(newArr);
-            ulHtml += `<li> The Fibonacci Of ${newArr.number} is
-                        ${newArr.result}. Calculated at: ${date}.</li>`;
+            ulHtml += `<li> The Fibonacci Of <b>${newArr.number}</b> is
+                        <b>${newArr.result}</b>. Calculated at: ${date}.</li>`;
         }
         document.getElementById("list-of-results").innerHTML = ulHtml;
     }
@@ -54,8 +53,6 @@
 
     const sortingArray = (data) => {
         let newArray;
-        console.log(select.value);
-        console.log(typeof select.value)
         switch (select.value) {
             case "1":
                 newArray = data.results.sort((a, b) => a.number - b.number);
@@ -64,14 +61,18 @@
                 newArray = data.results.sort((a, b) => b.number - a.number);
                 break;
             case "3":
-                newArray = data.results.sort((a, b) => {
-                    return a.createdDate - b.createdDate
-                });
+                newArray = data.results.sort((a, b) => a.createdDate - b.createdDate);
                 break;
             default:
                 newArray = data.results.sort((a, b) => b.createdDate - a.createdDate);
         }
         return newArray;
+    }
+    const showElement = (element) => {
+        element.classList.remove('d-none');
+    }
+    const hideElement = (element) => {
+        element.classList.add('d-none');
     }
 
     const hideResult = () => { // make it generic
@@ -82,15 +83,15 @@
         output.classList.remove('d-none');
     }
 
-    const loaderShow = (loaders) => {
-        for (const loader of loaders) {
-            loader.classList.remove('d-none');
+    const showElements = (elements) => {
+        for (const element of elements) {
+            element.classList.remove('d-none');
         }
     }
 
-    const loaderHide = (loaders) => {
-        for (const loader of loaders) {
-            loader.classList.add('d-none');
+    const hideElements = (elements) => {
+        for (const element of elements) {
+            element.classList.add('d-none');
         }
     }
 
@@ -101,7 +102,7 @@
                     error42.innerText = `Server error: ${text}`;
                     error42.setAttribute("class", "is-present");
                     output.classList.add('d-none');
-                    loaderHide(loaders);
+                    hideElements(loaders);
                 });
         }
         return response.json();
@@ -132,9 +133,9 @@
             showResult();
             return input;
         }
-        hideResult();
+        hideElement(output);
         errorMoreThan50.classList.remove('d-none');
-        loaderHide(loaders);
+        hideElements(loaders);
         return false;
     }
 
