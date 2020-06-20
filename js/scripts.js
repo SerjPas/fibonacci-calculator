@@ -1,57 +1,58 @@
 (() => {
-    let output = document.querySelector('#place-for-result');
-    let loaders = document.querySelectorAll('.loader');
-    let errorMoreThan50 = document.querySelector('.error50');
-    let error42 = document.querySelector('#error42');
-    let listOfResults = document.getElementById('list-of-results');
-    let select = document.getElementById('FormControlSelect');
-    let form = document.getElementById('calcFiboButton');
-    let checkBox = document.getElementById('check');
+    let fibonacciStore = {};
+    grabElements();
 
-    async function callServer(validInput) {
+    function grabElements() {
+        fibonacciStore.output = document.querySelector('#place-for-result');
+        fibonacciStore.loaders = document.querySelectorAll('.loader');
+        fibonacciStore.errorMoreThan50 = document.querySelector('.error50');
+        fibonacciStore.error42 = document.querySelector('#error42');
+        fibonacciStore.listOfResults = document.querySelector('#list-of-results');
+        fibonacciStore.select = document.querySelector('#FormControlSelect');
+        fibonacciStore.form = document.querySelector('#calcFiboButton');
+        fibonacciStore.checkBox = document.querySelector('#check');
+    }
+
+    async function callServer(SERVER_URL) {
+        return await fetch(SERVER_URL)
+            .then(response => validateResponse(response))
+            .then(data => data);
+    }
+
+    async function calcFibonacciOnServer(validInput) {
+        const {errorMoreThan50, output, loaders, error42} = fibonacciStore;
         const SERVER_URL = `http://localhost:5050/fibonacci/${validInput}`;
         showElements(loaders);
         hideElement(output);
-        checkThatErrorPresented();
-        return await fetch(SERVER_URL)
-            .then(function (response) {
-                return validateResponse(response);
-            })
-            .then(function (data) {
-                showElement(output);
-                hideElements(loaders);
-                return data.result
-            });
+        checkThatErrorIsPresented(errorMoreThan50);
+        checkThatErrorIsPresented(error42);
+        return await callServer(SERVER_URL);
     }
 
-    const convertDate = (newArr) => {                        // Converting milliseconds to a date
-        return new Date(newArr.createdDate).toString();
-    }
+    const convertDate = (array) => new Date(array.createdDate).toString();
 
     const showResultOnPage = (array) => {
+        const {listOfResults} = fibonacciStore;
         let ulHtml = '';
         for (let newArr of array) {
             let date = convertDate(newArr);
             ulHtml += `<li> The Fibonacci Of <b>${newArr.number}</b> is
                         <b>${newArr.result}</b>. Calculated at: ${date}.</li>`;
         }
-        document.getElementById("list-of-results").innerHTML = ulHtml;
+        listOfResults.innerHTML = ulHtml;
     }
 
-    const callResultsOnPageLoad = () => {
+    async function callResultsFromServer() {
+        const {listOfResults} = fibonacciStore;
         listOfResults.innerHTML = "";
         const SERVER_URL = `http://localhost:5050/getFibonacciResults`;
-        fetch(SERVER_URL)
-            .then(function (response) {
-                return validateResponse(response);
-            })
-            .then(function (data) {
-                let sortedArray = sortingArray(data);
-                showResultOnPage(sortedArray);
-            });
+        let array = await callServer(SERVER_URL);
+        let sortedArray = sortingArray(array);
+        showResultOnPage(sortedArray);
     }
 
     const sortingArray = (data) => {
+        const {select} = fibonacciStore;
         let newArray;
         switch (select.value) {
             case "1":
@@ -68,20 +69,9 @@
         }
         return newArray;
     }
-    const showElement = (element) => {
-        element.classList.remove('d-none');
-    }
-    const hideElement = (element) => {
-        element.classList.add('d-none');
-    }
+    const showElement = (element) => element.classList.remove('d-none');
 
-    const hideResult = () => { // make it generic
-        output.classList.add('d-none');
-    }
-
-    const showResult = () => {
-        output.classList.remove('d-none');
-    }
+    const hideElement = (element) => element.classList.add('d-none');
 
     const showElements = (elements) => {
         for (const element of elements) {
@@ -96,12 +86,13 @@
     }
 
     const validateResponse = (response) => {
+        const {error42, output, loaders} = fibonacciStore;
         if (!response.ok) {
             response.text()
                 .then(function (text) {
                     error42.innerText = `Server error: ${text}`;
                     error42.setAttribute("class", "is-present");
-                    output.classList.add('d-none');
+                    hideElement(output);
                     hideElements(loaders);
                 });
         }
@@ -118,41 +109,52 @@
         return prev;
     }
 
-    const checkThatErrorPresented = () => {
-        if (!errorMoreThan50.classList.contains("d-none")) {
-            errorMoreThan50.classList.add("d-none")
+    const checkThatErrorIsPresented = (error) => {
+        if (!error.classList.contains("d-none")) {
+            hideElement(error);
         }
-        if (error42.classList.contains('is-present')) {
-            error42.classList.add('d-none');
+        if (error.classList.contains('is-present')) {
+            hideElement(error);
         }
     }
 
     const validateInput = (input) => {
-        checkThatErrorPresented();
+        const {error42, errorMoreThan50, output, loaders} = fibonacciStore;
+        checkThatErrorIsPresented(errorMoreThan50);
+        checkThatErrorIsPresented(error42);
         if (input <= 50) {
-            showResult();
+            showElement(output);
             return input;
         }
         hideElement(output);
-        errorMoreThan50.classList.remove('d-none');
+        showElement(errorMoreThan50);
         hideElements(loaders);
         return false;
     }
 
     async function fibonacci(event) {
         event.preventDefault();
+        const {checkBox, output, loaders} = fibonacciStore;
         let myInput = document.querySelector('#number-input').value;
-        let validInput = validateInput(myInput)
+        let validInput = validateInput(myInput);
         if (validInput) {
             if (checkBox.checked) {
-                output.innerText = await callServer(validInput);
-                callResultsOnPageLoad();
+                let result = await calcFibonacciOnServer(validInput);
+                output.innerText = result.result;
+                showElement(output);
+                hideElements(loaders);
+                await callResultsFromServer();
             } else {
                 output.innerText = calcFibonacciLocal(validInput);
             }
         }
     }
-    form.addEventListener("submit", fibonacci);
-    select.addEventListener('change', callResultsOnPageLoad);
-    document.addEventListener('DOMContentLoaded', callResultsOnPageLoad);
+
+    (() => {
+        const {form, select} = fibonacciStore;
+        form.addEventListener("submit", fibonacci);
+        select.addEventListener('change', callResultsFromServer);
+        document.addEventListener('DOMContentLoaded', callResultsFromServer);
+    })();
+
 })();

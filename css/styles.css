@@ -53,7 +53,8 @@ body {
 .padding-left-14px {
     padding-left: 14px;
 }
-.margin-top-and-bottom{
+
+.margin-top-and-bottom {
     margin-top: 18px;
     margin-bottom: 40px;
 }
@@ -72,12 +73,16 @@ body {
     list-style: none;
     font-size: 23px;
     line-height: 23px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+    width: 100%;
 }
 
 #list-of-results li:hover {
     border-bottom: 2px solid #86CDFD;
     list-style: none;
-
 }
 
 .error50 {
